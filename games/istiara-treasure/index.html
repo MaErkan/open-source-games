@@ -25,7 +25,7 @@ const questions = [
 {q:'ما الأثر البلاغي للاستعارة في «بكتِ السماءُ»؟',options:['تشخيص السماء بإسناد فعل إنساني إليها','تشبيه الإنسان بالسماء تشبيهًا صريحًا','وصف السماء وصفًا حقيقيًّا خاليًا من الخيال'],answer:0,explanation:'شُبّهت السماء بإنسان يبكي؛ وفي ذلك تشخيص يضفي الحياة والإحساس على الصورة.'}
 ];
 const $ = id => document.getElementById(id);
-const arabic = n => n.toLocaleString('ar');
+const arabic = n => String(n).replace(/[0-9]/g, digit => '٠١٢٣٤٥٦٧٨٩'[Number(digit)]);
 let index = 0, score = 0, answered = false, answers = [];
 function drawLocks(){ $('locks').replaceChildren(...questions.map((_,i)=>{const el=document.createElement('span');el.className='lock'+(answers[i]===undefined?'':answers[i]===questions[i].answer?' good':' bad');el.textContent=answers[i]===undefined?arabic(i+1):answers[i]===questions[i].answer?'✓':'×';el.setAttribute('aria-label','السؤال '+arabic(i+1)+': '+(answers[i]===undefined?'لم يُجب عنه':answers[i]===questions[i].answer?'إجابة صحيحة':'إجابة غير صحيحة'));return el;}));}
 function start(){index=0;score=0;answered=false;answers=[];$('intro').hidden=true;$('result').hidden=true;$('quiz').hidden=false;$('chest').classList.remove('win');$('sceneNote').textContent='كل إجابة صحيحة تفتح قفلًا.';drawLocks();renderQuestion();}
